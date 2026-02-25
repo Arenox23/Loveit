@@ -17,14 +17,13 @@ body {
 }
 
 .box {
-  width: 320px;
+  width: 360px;
   background: white;
   border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
   text-align: center;
   padding: 20px;
   position: relative;
-  overflow: hidden;
 }
 
 h2 {
@@ -41,39 +40,23 @@ button {
   margin-top: 10px;
 }
 
-#slideshow {
-  display: none;
+.slideshow {
+  width: 100%;
+  height: 220px;
   margin-top: 15px;
-  height: 200px;
+  display: none;
+  justify-content: center;
+  align-items: center;
   position: relative;
 }
 
-#slideshow img {
-  position: absolute;
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
+.slideshow img {
+  max-width: 100%;
+  max-height: 100%;
   border-radius: 15px;
-  opacity: 0;
-  animation: fade 6s infinite;
-}
-
-@keyframes fade {
-  0% {opacity: 0;}
-  20% {opacity: 1;}
-  80% {opacity: 1;}
-  100% {opacity: 0;}
-}
-
-.heart {
   position: absolute;
-  font-size: 16px;
-  animation: float 4s linear infinite;
-}
-
-@keyframes float {
-  0% {transform: translateY(100%);}
-  100% {transform: translateY(-120%);}
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
 }
 </style>
 </head>
@@ -82,38 +65,44 @@ button {
 
 <div class="box">
   <h2>Hey You ❤️</h2>
-  <p>You make my days softer ✨</p>
+  <p>You make my days brighter ✨</p>
   <button onclick="startLove()">Open My Heart</button>
 
-  <div id="slideshow">
-    <img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif">
-    <img src="https://media.giphy.com/media/l0HlBO7eyXzSZkJri/giphy.gif" style="animation-delay:2s;">
-    <img src="https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif" style="animation-delay:4s;">
+  <div class="slideshow" id="slideshow">
+    <img src="gif1.gif" class="slide">
+    <img src="gif2.gif" class="slide">
+    <img src="gif3.gif" class="slide">
+    <img src="gif4.gif" class="slide">
+    <img src="gif5.gif" class="slide">
+    <img src="gif6.gif" class="slide">
+    <img src="gif7.gif" class="slide">
   </div>
-</div>
 
-<iframe id="music" width="0" height="0"
-  src=""
-  frameborder="0"
-  allow="autoplay">
-</iframe>
+<audio id="music" src="song.mp3"></audio>
 
 <script>
+let currentSlide = 0;
+let slides = document.getElementsByClassName("slide");
+
 function startLove() {
-  document.getElementById("slideshow").style.display = "block";
-  document.getElementById("music").src =
-  "https://www.youtube.com/embed/SHjE-Uxh7FU?start=90&autoplay=1&controls=0";
-  createHearts();
+  document.getElementById("slideshow").style.display = "flex";
+  document.getElementById("music").play();
+  showSlides();
 }
 
-function createHearts() {
-  for (let i = 0; i < 15; i++) {
-    let heart = document.createElement("div");
-    heart.innerHTML = "💖";
-    heart.className = "heart";
-    heart.style.left = Math.random() * 100 + "%";
-    document.querySelector(".box").appendChild(heart);
+function showSlides() {
+  for (let i = 0; i < slides.length; i++) {
+    slides[i].style.opacity = 0;
   }
+
+  currentSlide++;
+  if (currentSlide > slides.length) {
+    currentSlide = 1;
+  }
+
+  slides[currentSlide - 1].style.opacity = 1;
+
+  setTimeout(showSlides, 3000);
 }
 </script>
 
