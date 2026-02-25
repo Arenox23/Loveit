@@ -61,11 +61,26 @@ button {
 
 #lyrics {
   margin-top: 15px;
-  font-size: 18px;
+  font-size: 19px;
   color: #ff4d6d;
   min-height: 40px;
   font-weight: bold;
   transition: opacity 0.5s ease-in-out;
+  animation: glowPulse 2s infinite alternate;
+}
+
+@keyframes glowPulse {
+  from {
+    text-shadow: 
+      0 0 5px #ff99ac,
+      0 0 10px #ff4d6d;
+  }
+  to {
+    text-shadow: 
+      0 0 10px #ff4d6d,
+      0 0 20px #ff1f4b,
+      0 0 25px #ff1f4b;
+  }
 }
 </style>
 </head>
@@ -73,8 +88,8 @@ button {
 <body>
 
 <div class="box">
-  <h2>oyyii merii Cutieee piee ❤️</h2>
-  <p>Goooooddd morningggg ✨</p>
+  <h2>Merii Cutieee Piee ❤️</h2>
+  <p>Goooooddd morningggg 🥰✨</p>
   <button onclick="startLove()">Open My Heart</button>
 
   <div class="slideshow" id="slideshow">
@@ -152,9 +167,9 @@ function showLyrics() {
       lyricBox.innerText = lyrics[lyricIndex];
       lyricBox.style.opacity = 1;
       lyricIndex++;
-    }, 500);
+    }, 400);
 
-    setTimeout(showLyrics, 3500);
+    setTimeout(showLyrics, 2800);  // 2.8 sec timing
   }
 }
 </script>
