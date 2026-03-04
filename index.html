@@ -2,176 +2,160 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>For You ❤️</title>
+<title>Happy Holi My Baby Girl ❤️</title>
 
 <style>
 body {
   margin: 0;
-  padding: 0;
-  background: linear-gradient(135deg,#ff9a9e,#fad0c4);
-  font-family: Arial, sans-serif;
+  height: 100vh;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  background: black;
+  transition: background 3s ease;
 }
 
-.box {
-  width: 370px;
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+.container {
   text-align: center;
-  padding: 20px;
-  position: relative;
+  z-index: 2;
 }
 
-h2 {
-  color: #ff4d6d;
+h1 {
+  font-size: 42px;
+  margin: 10px 0;
+  background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
+  background-size: 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbow 5s linear infinite;
+  opacity: 0;
+  transform: scale(0.6);
+  transition: 1s ease;
+}
+
+@keyframes rainbow {
+  0% { background-position: 0% }
+  100% { background-position: 400% }
+}
+
+p {
+  font-size: 20px;
+  color: white;
+  opacity: 0;
+  transition: opacity 2s ease;
 }
 
 button {
-  padding: 10px 20px;
+  padding: 12px 25px;
   border: none;
-  border-radius: 20px;
-  background: #ff4d6d;
+  border-radius: 30px;
+  background: linear-gradient(45deg,#ff4d6d,#ff9800,#9c27b0);
   color: white;
+  font-size: 16px;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
-.slideshow {
-  width: 100%;
-  height: 220px;
-  margin-top: 15px;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-}
-
-.slideshow img {
-  max-width: 100%;
-  max-height: 100%;
-  border-radius: 15px;
+.color {
   position: absolute;
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  animation: explode 1.5s ease-out forwards;
 }
 
-#lyrics {
-  margin-top: 15px;
-  font-size: 19px;
-  color: #ff4d6d;
-  min-height: 40px;
-  font-weight: bold;
-  transition: opacity 0.5s ease-in-out;
-  animation: glowPulse 2s infinite alternate;
-}
-
-@keyframes glowPulse {
+@keyframes explode {
   from {
-    text-shadow: 
-      0 0 5px #ff99ac,
-      0 0 10px #ff4d6d;
+    transform: scale(0);
+    opacity: 1;
   }
   to {
-    text-shadow: 
-      0 0 10px #ff4d6d,
-      0 0 20px #ff1f4b,
-      0 0 25px #ff1f4b;
+    transform: translate(var(--x), var(--y)) scale(2);
+    opacity: 0;
   }
+}
+
+.show {
+  opacity: 1 !important;
+  transform: scale(1) !important;
+}
+
+#finalMessage {
+  margin-top: 15px;
+  font-size: 22px;
+  font-weight: bold;
+  color: white;
+  opacity: 0;
+  transition: opacity 2s ease;
 }
 </style>
 </head>
 
-<body>
+<body onclick="extraSplash(event)">
 
-<div class="box">
-  <h2>Merii Cutieee Piee ❤️</h2>
-  <p>Goooooddd morningggg 🥰✨</p>
-  <button onclick="startLove()">Open My Heart</button>
-
-  <div class="slideshow" id="slideshow">
-    <img src="gif1.gif" class="slide">
-    <img src="gif2.gif" class="slide">
-    <img src="gif3.gif" class="slide">
-    <img src="gif4.gif" class="slide">
-    <img src="gif5.gif" class="slide">
-    <img src="gif6.gif" class="slide">
-    <img src="gif7.gif" class="slide">
-  </div>
-
-  <div id="lyrics"></div>
+<div class="container">
+  <h1 id="title">Happy Holi My Baby Girl ❤️</h1>
+  <p id="msg">You are the most beautiful color in my life 🌈</p>
+  <button onclick="celebrate(event)">Celebrate 🎨</button>
+  <div id="finalMessage">Forever my favorite person 💖</div>
 </div>
 
 <audio id="music" src="song.mp3"></audio>
 
 <script>
-let currentSlide = 0;
-let slides = document.getElementsByClassName("slide");
-let lyricIndex = 0;
 
-let lyrics = [
-"Aakhya Me Aankh Manne Ghali Jo Beran",
-"Teri Jhuk Gayi Thi Aankh Sharma Ke Ne Beran",
+let activated = false;
 
-"Gora Gora Chaam Tera Kaale Kaale Baal Tere",
-"Doob Gaya Main Billi Billi Aankhya Mein Bairan",
+function celebrate(e) {
+  e.stopPropagation();
 
-"Teri Hansi Ke Hansi Jama Zeher Chhori Re",
-"Is Chhore Ke Dil Pe Dhave Keher Chhori Re",
+  activated = true;
 
-"Kade Rolya Mein Pair bhi na Tekya Manne",
-"Tere Paache Paale Baithe Ghane Bair Chhori Re",
-
-"Tu Fursat Te Ghadi I Think Meri Jaan",
-"Hoth Tere Laal Gaal Pink Meri Jaan",
-
-"Paida Pe Paid Tu Mila ke Chaliye",
-"Teri Gel Deun Gaane Main Sync Meri Jaan",
-
-"Main To Dekh Dekh Sheesha Sharmandi Phiru Su",
-"Dekh Dekh Sheesha Sharmandi Phiru Su",
-"Main To Dekh Dekh Sheesha Sharmandi Phiru Su"
-];
-
-function startLove() {
-  document.getElementById("slideshow").style.display = "flex";
   document.getElementById("music").play();
-  showSlides();
-  showLyrics();
+
+  document.getElementById("title").classList.add("show");
+  document.getElementById("msg").classList.add("show");
+
+  document.body.style.background = "linear-gradient(45deg,#ff4d6d,#ff9800,#9c27b0,#00e5ff,#4caf50)";
+
+  createBurst(window.innerWidth/2, window.innerHeight/2);
+
+  setTimeout(() => {
+    document.getElementById("finalMessage").style.opacity = 1;
+  }, 5000);
 }
 
-function showSlides() {
-  for (let i = 0; i < slides.length; i++) {
-    slides[i].style.opacity = 0;
-  }
+function createBurst(x, y) {
+  for (let i = 0; i < 100; i++) {
+    let color = document.createElement("div");
+    color.className = "color";
 
-  currentSlide++;
-  if (currentSlide > slides.length) {
-    currentSlide = 1;
-  }
+    let colors = ["#ff4d6d","#ff9800","#9c27b0","#00e5ff","#4caf50","#ffff00"];
+    color.style.background = colors[Math.floor(Math.random()*colors.length)];
 
-  slides[currentSlide - 1].style.opacity = 1;
+    color.style.left = x + "px";
+    color.style.top = y + "px";
 
-  setTimeout(showSlides, 3000);
-}
+    let moveX = (Math.random() - 0.5) * 700 + "px";
+    let moveY = (Math.random() - 0.5) * 700 + "px";
 
-function showLyrics() {
-  if (lyricIndex < lyrics.length) {
-    let lyricBox = document.getElementById("lyrics");
-    lyricBox.style.opacity = 0;
+    color.style.setProperty('--x', moveX);
+    color.style.setProperty('--y', moveY);
 
-    setTimeout(() => {
-      lyricBox.innerText = lyrics[lyricIndex];
-      lyricBox.style.opacity = 1;
-      lyricIndex++;
-    }, 400);
+    document.body.appendChild(color);
 
-    setTimeout(showLyrics, 2800);  // 2.8 sec timing
+    setTimeout(() => { color.remove(); }, 1500);
   }
 }
+
+function extraSplash(e) {
+  if (activated) {
+    createBurst(e.clientX, e.clientY);
+  }
+}
+
 </script>
 
 </body>
